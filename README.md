@@ -8,7 +8,7 @@ Ze względu na duży rozmiar danych wejściowych zdecydowałem się na rozwiąza
 
    **Proces rozwiązania:**
 Na początku zaimplementowałem wersję rekurencyjną operacji na grafie. (commit recursive implementation), która działą dla nie bardzo dużych danych.
-Podczas testów wykryłem jednak problemy z pamięcią, ze względu na zbyt dużą głębokość rekursji.
+Podczas testów wykryłem jednak problemy z pamięcią, ze względu na zbyt dużą głębokość rekursji (podczas testów warto ustawić ją w opjach kompilatora na maksymalną).
 Zacząłem zmieniać moje rozwiązanie, na iteracyjne, jednak nie udało mi się dokończyć tego w wyznaczonym czasie - do rozwiązania z commitu iterative add and count należy dodać iteracyjną wersję size oraz je przetestować.
 
  **Uwagi:**
