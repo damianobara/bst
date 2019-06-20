@@ -38,18 +38,16 @@ class Tree {
         return false;
     }
     void insert(size_t x, std::shared_ptr<Node>& p) {
-        if (p && x < p->key && p->left) {
-            return insert(x, p->left);
-        }
-        else if (p && x < p->key && !p->left){
-            p->left = std::shared_ptr<Node>(new Node(x));
-        }
-
-        else if (p && x > p->key && p->right) {
-            return insert(x, p->right);
-        }
-        else if (p && x > p->key && !p->right) {
-            p->right = std::shared_ptr<Node>(new Node(x));
+        while (p && x != p->key) {
+            if (p && x < p->key && p->left) {
+                p = p->left;
+            } else if (p && x < p->key && !p->left) {
+                p->left = std::shared_ptr<Node>(new Node(x));
+            } else if (p && x > p->key && p->right) {
+                p = p->right;
+            } else if (p && x > p->key && !p->right) {
+                p->right = std::shared_ptr<Node>(new Node(x));
+            }
         }
     }
 public:
@@ -114,7 +112,7 @@ size_t count(Tree &a, Tree &b) {
 
 int main() {
     Tree A, B;
-    for (size_t i = 0; i < 100000; i++) {
+    for (size_t i = 0; i < 10000000; i++) {
         A.insert(i);
     }
     std::cout << count(A, B) << std::endl;
