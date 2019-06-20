@@ -1,21 +1,17 @@
 #include <iostream>
 #include <memory>
 
-using namespace std;
-
-
-
 class Tree {
     struct Node {
         size_t key;
-        shared_ptr<Node> left;
-        shared_ptr<Node> right;
+        std::shared_ptr<Node> left;
+        std::shared_ptr<Node> right;
         Node():key(), left(), right(){}
         Node(size_t x):key(x),left(), right(){}
     };
-    shared_ptr<Node> root;
+    std::shared_ptr<Node> root;
 
-    bool remove(size_t x, shared_ptr<Node>& p) {
+    bool remove(size_t x, std::shared_ptr<Node>& p) {
         if(p && x < p->key) {
             return remove(x, p->left);
         }
@@ -30,7 +26,7 @@ class Tree {
                 p = p->left;
             }
             else {
-                shared_ptr<Node> q = p->left;
+                std::shared_ptr<Node> q = p->left;
                 while(q->right) {
                     q = q->right;
                 }
@@ -41,19 +37,19 @@ class Tree {
         }
         return false;
     }
-    void insert(size_t x, shared_ptr<Node>& p) {
+    void insert(size_t x, std::shared_ptr<Node>& p) {
         if (p && x < p->key && p->left) {
             return insert(x, p->left);
         }
         else if (p && x < p->key && !p->left){
-            p->left = shared_ptr<Node>(new Node(x));
+            p->left = std::shared_ptr<Node>(new Node(x));
         }
 
         else if (p && x > p->key && p->right) {
             return insert(x, p->right);
         }
         else if (p && x > p->key && !p->right) {
-            p->right = shared_ptr<Node>(new Node(x));
+            p->right = std::shared_ptr<Node>(new Node(x));
         }
     }
 public:
@@ -68,29 +64,29 @@ public:
     }
     void insert(size_t x) {
         if (!root) {
-            root = shared_ptr<Node>(new Node(x));
+            root = std::shared_ptr<Node>(new Node(x));
         }
         else return insert(x, root);
     }
 
-    static size_t size(shared_ptr<Node>& p) {
+    static size_t size(std::shared_ptr<Node>& p) {
         if (!p) return 0;
         return size(p->left) + size(p->right) + 1;
     }
-    friend void count (shared_ptr<Node>& a, shared_ptr<Node>& b, size_t *result);
+    friend void count (std::shared_ptr<Node>& a, std::shared_ptr<Node>& b, size_t *result);
     friend size_t count(Tree &a, Tree &b);
     };
 
 void build(Tree &t) {
     size_t size, val;
-    cin >> size;
+    std::cin >> size;
     for (size_t i = 0; i < size; i++) {
-        cin >> val;
+        std::cin >> val;
         t.insert(val);
     }
 }
 
-void count (shared_ptr<Tree::Node>& a, shared_ptr<Tree::Node>& b, size_t *result) {
+void count (std::shared_ptr<Tree::Node>& a, std::shared_ptr<Tree::Node>& b, size_t *result) {
     if (!a) {
         *result += Tree::size(b);
     }
@@ -118,7 +114,8 @@ size_t count(Tree &a, Tree &b) {
 
 int main() {
     Tree A, B;
-    build(A);
-    build(B);
-    cout << count(A, B);
+    for (size_t i = 0; i < 100000; i++) {
+        A.insert(i);
+    }
+    std::cout << count(A, B) << std::endl;
 }
